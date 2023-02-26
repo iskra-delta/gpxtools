@@ -1,0 +1,6 @@
+[submodule "lib/stb"]
+	path = lib/stb
+	url = https://github.com/nothings/stb.git
+[submodule "lib/cxx_argp"]
+	path = lib/cxx_argp
+	url = https://github.com/pboettch/cxx_argp.git
