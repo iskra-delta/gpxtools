@@ -1,5 +1,5 @@
 /*
- * snatch.h
+ * img_arr_args.h
  * 
  * Snatch main header file.
  * 
@@ -12,11 +12,13 @@
 #ifndef __SNATCH_H__
 #define __SNATCH_H__
 
-namespace snatch {
-    enum result { SUCCESS = 0, INVALID_ARGS };
+#include <base/img_arr_args.h>
 
-    struct args {
-        bool test; // Is test run?
+namespace snatch {
+    struct snatch_args : gpxtools::img_arr_args {
+        inline snatch_args(cxx_argp::parser &parser) : img_arr_args(parser) {
+            
+        }
     };
 }
 

@@ -50,7 +50,8 @@
         "tuple": "cpp",
         "typeinfo": "cpp",
         "utility": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "fstream": "cpp"
     },
     "grammarly.files.exclude": [
         "**/CMakeLists.txt"
