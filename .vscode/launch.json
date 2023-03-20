@@ -6,8 +6,8 @@
             "type": "cppdbg",
             "request": "launch",
             // Resolved by CMake Tools:
-            "program": "${command:cmake.launchTargetPath}",
-            "args": [ "--test", "--output", "test.png", "-m", "10,0,0,0" ],
+            "program": "${workspaceFolder}/bin/vectorize",
+            "args": [ "--input", "${workspaceFolder}/test/data/test-vect.png", "--output", "test.png"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [

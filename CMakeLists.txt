@@ -12,4 +12,5 @@ set(LIBRARY_OUTPUT_PATH  ${PROJECT_SOURCE_DIR}/bin/)
 include_directories(lib)
 include_directories(src)
 
+add_subdirectory(lib/ga)
 add_subdirectory(src)

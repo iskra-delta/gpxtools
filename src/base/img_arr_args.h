@@ -28,8 +28,8 @@ namespace gpxtools {
             glyph_width=8;
             glyph_height=8;
             // Populate parser.
-            parser.add_option({"width", 'gw', "glyph-width", 0, "Width of individual glyph"}, glyph_width);
-            parser.add_option({"height", 'gh', "glyph-height", 0, "Height of individual glyph"}, glyph_height);
+            parser.add_option({"width", 'w', "glyph-width", 0, "Width of individual glyph"}, glyph_width);
+            parser.add_option({"height", 'h', "glyph-height", 0, "Height of individual glyph"}, glyph_height);
         }
     };
 }
