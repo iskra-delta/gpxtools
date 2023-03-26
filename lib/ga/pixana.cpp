@@ -14,7 +14,7 @@
 
 using namespace ga;
 
-void pixana::bulk()
+std::vector<std::vector<int>> pixana::blobs(uint8_t threshold)
 {
 
     // First create data structure to store bulk pixels.
@@ -31,7 +31,7 @@ void pixana::bulk()
         {
             // Default is white...
             *ppix = 0;
-            if (is_black(pimg))
+            if (is_black(pimg, threshold))
             {
                 // Get left top, top, right top and left values
                 uint8_t
@@ -63,29 +63,27 @@ void pixana::bulk()
             ppix++;
         }
 
-    // Pass 2: Resolve identities.
+    // Pass 2: Resolve identities and generate the result.
     ppix = pixels;
     uint8_t c, root;
+    std::map<uint8_t,std::vector<int>> group;
     while (len--)
     {
         // Is there a pixel?
-        if (c = *ppix)
+        if (c = *ppix) {
             if ((root = id.find(c)) != c && root)
                 *ppix = root;
+            // Add offset to map.
+            group[*ppix].push_back(ppix-pixels);
+        }
         ppix++;
     }
 
-    // Test display.
-    ppix = pixels;
-    for (uint16_t y = 0; y < h; y++)
-    {
-        for (uint16_t x = 0; x < w; x++) {
-            int v=(int)(*ppix++);
-            if (v)
-                std::cout << v;
-            else
-                std::cout << ' ';
-        }
-        std::cout << std::endl;
+    // Finally, restructure the result.
+    std::vector<std::vector<int>> result;
+    for (auto& kv : group) {
+        result.push_back(kv.second);
     }
+    return result;
+
 }

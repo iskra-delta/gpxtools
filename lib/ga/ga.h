@@ -19,6 +19,7 @@
 #include <algorithm>
 #include <iostream>
 #include <vector>
+#include <map>
 
 #include <stb/stb_image.h>
 
@@ -53,9 +54,12 @@ namespace ga
     {
     public:
         pixana(const image *image): image_(image) {}
-        void bulk();
+        // This function scans the image and returns all blobs.
+        std::vector<std::vector<int>> blobs(uint8_t threshold=32);
     protected:
-        inline uint8_t is_black(uint8_t *pval) { return (*pval)<=32; }
+        inline uint8_t is_black(uint8_t *pval, uint8_t threshold=32) { 
+            return (*pval)<=threshold; 
+        }
     private:
         const image *image_;
     };

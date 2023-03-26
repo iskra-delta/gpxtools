@@ -32,6 +32,6 @@ int main(int argc, char *argv[]) {
 
     auto img=std::make_unique<ga::image>(args.input);
     auto pixana=ga::pixana(img.get());
-    pixana.bulk();
+    auto result=pixana.blobs();
     
 }
