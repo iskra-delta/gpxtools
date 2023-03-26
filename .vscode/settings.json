@@ -51,7 +51,8 @@
         "typeinfo": "cpp",
         "utility": "cpp",
         "valarray": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "set": "cpp"
     },
     "grammarly.files.exclude": [
         "**/CMakeLists.txt"
