@@ -52,7 +52,20 @@
         "utility": "cpp",
         "valarray": "cpp",
         "fstream": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "atomic": "cpp",
+        "condition_variable": "cpp",
+        "csignal": "cpp",
+        "cstdarg": "cpp",
+        "algorithm": "cpp",
+        "iterator": "cpp",
+        "memory_resource": "cpp",
+        "random": "cpp",
+        "mutex": "cpp",
+        "semaphore": "cpp",
+        "stop_token": "cpp",
+        "thread": "cpp",
+        "cinttypes": "cpp"
     },
     "grammarly.files.exclude": [
         "**/CMakeLists.txt"

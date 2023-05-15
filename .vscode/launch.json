@@ -5,9 +5,8 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            // Resolved by CMake Tools:
             "program": "${workspaceFolder}/bin/vectorize",
-            "args": [ "--input", "${workspaceFolder}/test/data/test-vect.png", "--output", "test.png"],
+            "args": [ "--input", "${workspaceFolder}/test/data/gamepad-top.png", "--output", "test.png"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [
@@ -18,12 +17,17 @@
                     "value": "$PATH:${command:cmake.launchTargetDirectory}"
                 }
             ],
-            "externalConsole": true,
+            "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
                     "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
                     "ignoreFailures": true
                 }
             ]

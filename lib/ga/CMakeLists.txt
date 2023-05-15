@@ -3,7 +3,7 @@ set(SOURCES
     exception.cpp
     union.cpp
     image.cpp
-    pixana.cpp
+    algo.cpp
 )
 
 set(HEADERS
