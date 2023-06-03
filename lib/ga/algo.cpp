@@ -16,9 +16,16 @@
 
 namespace ga {
 
-std::vector<int> bresenham_line(const image &img, int x0, int y0, int x1, int y1) {
-    std::vector<int> line_indices;
+bool bresenham_line(
+    const image &img,  // Image.
+    std::set<int> &indices, // Vector of all existing indices.
+    int first,
+    int last) {
     
+    // deduce coordinates from first and last
+    auto [x0,y0] = img.getxy(first),
+        [x1,y1] = img.getxy(last);
+
     // calculate differences between endpoints
     int dx = abs(x1 - x0);
     int dy = abs(y1 - y0);
@@ -37,7 +44,9 @@ std::vector<int> bresenham_line(const image &img, int x0, int y0, int x1, int y1
     while (true) {
         // add index of current point to line_indices
         int index = y * img.width() + x;
-        line_indices.push_back(index);
+
+        // check if index is next index on line.
+        if (indices.find(index)==indices.end()) return false;
         
         // check if end of line has been reached
         if (x == x1 && y == y1) {
@@ -61,7 +70,8 @@ std::vector<int> bresenham_line(const image &img, int x0, int y0, int x1, int y1
         }
     }
     
-    return line_indices;
+    // If we're here, it's a line!
+    return true;
 }
 
 
