@@ -3,10 +3,15 @@
     "configurations": [
         {
             "name": "(gdb) Launch",
+            "preLaunchTask": "build gpxtools",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/vectorize",
-            "args": [ "--input", "${workspaceFolder}/test/data/gamepad-top.png", "--output", "test.png"],
+            "args": [ 
+                "--input", 
+                "${workspaceFolder}/test/data/test-vect.png", 
+                "--output", 
+                "${workspaceFolder}/test/data/test.png"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [

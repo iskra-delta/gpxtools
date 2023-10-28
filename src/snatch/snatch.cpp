@@ -26,15 +26,14 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	cgen::cstreambuf csb(std::cout.rdbuf());
-	cgen::cstream cs(&csb);
+	cgen::cstream cs(std::cout);
 
-	// Code generator.
+	// Code generator
 	cs 	<< cgen::header("snatch.cpp",
 						"Snatch main file.",
 						"MIT License (see: LICENSE)",
 						"Copyright (c) 2023 Tomaz Stih",
 						"tstih")
-		<< cgen::indent(8) // Indent 8 spaces from now on.
+		<< cgen::indent(4) // Indent 8 spaces from now on.
 		<< std::endl;
 }

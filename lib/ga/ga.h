@@ -48,11 +48,11 @@ namespace ga
         inline int height() const { return height_; }
         inline uint8_t* data() const { return data_; }
         
-        inline std::tuple<int,int> getxy(int offs) {
+        inline std::tuple<int,int> getxy(int offs) const {
             // Assume 1 byte per pixel.
             return { offs%width_, offs/width_ };
         }
-        inline int getoffs(int x, int y) {
+        inline int getoffs(int x, int y) const {
             // Assume 1 byte per pixel.
             return y*width_+x;
         }

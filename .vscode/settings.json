@@ -66,8 +66,5 @@
         "stop_token": "cpp",
         "thread": "cpp",
         "cinttypes": "cpp"
-    },
-    "grammarly.files.exclude": [
-        "**/CMakeLists.txt"
-    ]
+    }
 }

@@ -1,5 +1,7 @@
-add_executable(vectorize vectorize/vectorize.cpp)
-target_link_libraries(vectorize ga)
+project(gpxtools)
 
-add_executable(snatch snatch/snatch.cpp)
-target_link_libraries(snatch ga)
+set(CMAKE_BUILD_TYPE "Debug")
+
+add_executable(vectorize vectorize/vectorize.cpp)
+
+target_link_libraries(vectorize ga)

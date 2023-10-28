@@ -19,7 +19,6 @@ namespace gpxtools {
     struct vectorize_args : img_args {
         vectorize_args(cxx_argp::parser &parser) : img_args(parser) {}
     };
-
     
 }
 

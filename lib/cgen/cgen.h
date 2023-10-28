@@ -15,25 +15,39 @@
 
 #include <ostream>
 #include <iomanip>
+#include <memory>
 
 namespace cgen
 {
-    // Custom stream buffer that tracks rows.
-    class cstreambuf : public std::streambuf {
-    public:
-        cstreambuf(std::streambuf* buf) : buf_(buf) {
+    // Add char_traits::newline
+    struct code_traits :  public std::char_traits<char> {
+        static constexpr char_type newline='\n';
+    };
 
-        }
-        virtual int_type overflow(int_type ch) override {
-            if (ch == '\n') {
-                // Remember start of row position.
-                row_start_ = buf_->pubseekoff(0, std::ios_base::cur);
-                // Add indent.
-                if (indent_)
-                    for(unsigned char i=0;i<indent_;i++)
-                        buf_->sputc(' ');
-            }
-            return buf_->sputc(ch);
+    // Custom stream buffer that tracks rows.
+    class cstreambuf : public std::basic_streambuf<char,code_traits> {
+    public:
+        cstreambuf(std::streambuf* buf) : buf_(buf) {}
+    
+        virtual int_type overflow(int_type c) override {
+
+            // End of code?
+            if (c != code_traits::eof()) {
+                // Write the char.
+                return buf_->sputc(c);
+                if (c == code_traits::newline) {
+                    // Write newline first.
+
+                    // Remember start of row position.
+                    row_start_ = buf_->pubseekoff(0, std::ios_base::cur);
+                    // Add indent.
+                    if (indent_)
+                        for(unsigned char i=0;i<indent_;i++)
+                            buf_->sputc(' ');
+                }
+            } else 
+                // On eof it should return ... eof!
+                return code_traits::eof();
         }
     
         // We don't let indent longer than 255...
@@ -42,8 +56,7 @@ namespace cgen
         }
     private:
         unsigned char indent_ {0}; // Default = no indent.
-        unsigned char tab_size_ {0};
-        std::streambuf* buf_;
+        std::streambuf* buf_; // Target stream.
         std::streampos row_start_;
     };
 
@@ -51,15 +64,15 @@ namespace cgen
     class cstream : public std::basic_ostream<char>
     {
     public:
-        cstream(cstreambuf *buf) : std::basic_ostream<char>(buf) {
-            buf_=buf;
+        cstream(std::ostream os) : std::basic_ostream<char>() {
+            buf_=std::make_unique<cstreambuf>(os.rdbuf());
         }
         cstream& set_indent(unsigned char indent) {
             buf_->set_indent(indent);
             return *this;
         }
     private:
-        cstreambuf *buf_;
+        std::unique_ptr<cstreambuf> buf_;
     };
 
         // File header.
