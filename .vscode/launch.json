@@ -6,12 +6,7 @@
             "preLaunchTask": "build gpxtools",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/vectorize",
-            "args": [ 
-                "--input", 
-                "${workspaceFolder}/test/data/test-vect.png", 
-                "--output", 
-                "${workspaceFolder}/test/data/test.png"],
+            "program": "${workspaceFolder}/bin/tests",
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [
