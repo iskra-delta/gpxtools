@@ -153,7 +153,6 @@ namespace ga
     }
 
     void move_elem(std::set<int> sfrom, std::set<int> sto, std::set<int> pts) {
-        sto.insert(sfrom.extract(pt).value());
     }
 
     int furthest_point(
@@ -180,21 +179,25 @@ namespace ga
         return result;
     }
 
+/*
     std::vector<std::pair<int,int>> match_line(
         int pstart,
         int pend,
         const image &img,
         std::set<int> unused 
     ) {
-        auto [x0, y0] = 
+        // auto [x0, y0] = 
+        std::vector<std::pair<int,int>> result;
+        return result;
     }
+*/
 
     std::vector<std::pair<int,int>> vectorize(
         const image &img,           // The image.
         std::vector<int> pixels,    // The stroke.
         uint8_t threshold){         // Black pixel threshold.
 
-        // Result.
+        // Result is a vector of pair of points.
         std::vector<std::pair<int,int>> lines;
 
         // Vector should already be sorted if coming from blobs.
@@ -213,6 +216,7 @@ namespace ga
                 move_elem(unused, used, pstart); // unused->used.
             } else {
                 // Try to match the line.
+                /*
                 auto line=match_line(pstart,pend, img, unused);
                 if (line.empty()) { // No match -> remove end and retry.
                     move_elem(unused, visited, pend);
@@ -221,6 +225,7 @@ namespace ga
                     // Move all matched pixels to used.
                     // Push pixels to result.
                 }
+                */
             }
         }
         // Return result.

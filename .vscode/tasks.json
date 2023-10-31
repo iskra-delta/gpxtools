@@ -7,10 +7,7 @@
             "command": "cmake",
             "args": [
                 "--build",
-                "${workspaceFolder}/build",
-                "-G", 
-                "Unix Makefiles",
-                "-DCMAKE_BUILD_TYPE=Debug"
+                "${workspaceFolder}/build"
             ],
             "group": {
                 "kind": "build",
