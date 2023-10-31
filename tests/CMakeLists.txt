@@ -8,3 +8,9 @@ add_executable(tests main.cpp test-blob.cpp)
 
 # Link in google tests.
 target_link_libraries(tests gtest gtest_main)
+
+# Make sure the test data is copied.
+file(COPY
+    data
+    DESTINATION ${EXECUTABLE_OUTPUT_PATH}
+)
