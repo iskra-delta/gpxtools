@@ -1,3 +1,5 @@
+project(gpxtools)
+
 # Define the library sources and headers
 set(SOURCES
     exception.cpp

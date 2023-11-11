@@ -148,11 +148,33 @@ namespace ga
         return result;
     }
 
-    void move_elem(std::set<int> sfrom, std::set<int> sto, int pt) {
-        sto.insert(sfrom.extract(pt).value());
+    void move_elem(std::set<int>& sfrom, std::set<int>& sto, int pt) {
+        sfrom.erase(pt);
+        sto.insert(pt);
     }
 
-    void move_elem(std::set<int> sfrom, std::set<int> sto, std::set<int> pts) {
+    void move_elem(
+        std::set<int>& sfrom, 
+        std::set<int>& sto, 
+        std::vector<int>& pts) {
+
+        for (auto pt:pts) {
+            sfrom.erase(pt);
+            sto.insert(pt);
+        }
+
+    }
+
+    void move_elem(
+        std::set<int>& sfrom, 
+        std::set<int>& sto) {
+
+        // First copy from to to.
+        for (auto pt:sfrom) sto.insert(pt);
+
+        // And now empty form.
+        sfrom.clear();
+
     }
 
     int furthest_point(
@@ -179,18 +201,65 @@ namespace ga
         return result;
     }
 
-/*
-    std::vector<std::pair<int,int>> match_line(
+    std::vector<int> match_line(
         int pstart,
         int pend,
         const image &img,
-        std::set<int> unused 
+        std::set<int> unused,
+        uint8_t threshold
     ) {
-        // auto [x0, y0] = 
-        std::vector<std::pair<int,int>> result;
+        // Get all pixels for the proposed line.
+        auto [x0, y0] = img.getxy(pstart);
+        auto [x1, y1] = img.getxy(pend);
+        auto pixels = bresenham_line(
+            img,x0,y0,x1,y1);
+
+        // Image has pixels?
+        for(int index=0; index < pixels.size(); index++)
+            if (unused.find(pixels[index])==unused.end()) {
+                std::vector<int> empty;
+                return empty;
+            }
+
+        // If we are here, we found a match.
+        return pixels;
+    }
+
+    bool inside(const image &img, int x, int y) {
+        return (x >= 0 && x < img.width() && y >= 0 && y < img.height());
+    }
+
+    std::set<int> get_neighbours(
+        const image &img, 
+        int pt, 
+        std::set<int> unused) {
+        std::set<int> candidates, result;
+        // Get x,y.
+        auto [x, y] = img.getxy(pt);
+        // Get all neighbour points.
+        if (inside(img,x-1,y-1)) 
+            candidates.insert(img.getoffs(x-1,y-1));
+        if (inside(img,x,y-1)) 
+            candidates.insert(img.getoffs(x,y-1));
+        if (inside(img,x+1,y-1)) 
+            candidates.insert(img.getoffs(x+1,y-1));
+        if (inside(img,x-1,y)) 
+            candidates.insert(img.getoffs(x-1,y));
+        if (inside(img,x+1,y)) 
+            candidates.insert(img.getoffs(x+1,y));
+        if (inside(img,x-1,y+1)) 
+            candidates.insert(img.getoffs(x-1,y+1));
+        if (inside(img,x,y+1)) 
+            candidates.insert(img.getoffs(x,y+1));
+        if (inside(img,x+1,y+1)) 
+            candidates.insert(img.getoffs(x+1,y+1));
+        // Remove points that are not in unused.
+        for(auto pt:candidates)
+            if (unused.find(pt)!=unused.end())
+                result.insert(pt);
+        // And return the rest.
         return result;
     }
-*/
 
     std::vector<std::pair<int,int>> vectorize(
         const image &img,           // The image.
@@ -216,16 +285,27 @@ namespace ga
                 move_elem(unused, used, pstart); // unused->used.
             } else {
                 // Try to match the line.
-                /*
-                auto line=match_line(pstart,pend, img, unused);
+                auto line=match_line(pstart,pend, img, unused, threshold);
                 if (line.empty()) { // No match -> remove end and retry.
                     move_elem(unused, visited, pend);
                 } else { // Yuuperoo. A match.
+                    // Push line to lines.
+                    lines.push_back(std::make_pair(pstart,pend));
                     // Restore all visited nodes.
+                    move_elem(visited, unused);
                     // Move all matched pixels to used.
-                    // Push pixels to result.
+                    move_elem(unused,used,line);
+                    // If pend has unused neighbours then 
+                    // take those, else take first unused.
+                    if (!unused.empty()) {
+                        // Get all neighbour point.
+                        auto nb=get_neighbours(img,pend,unused);
+                        if (!nb.empty())
+                            pstart=pend;
+                        else
+                            pstart=*(unused.begin());
+                    }
                 }
-                */
             }
         }
         // Return result.

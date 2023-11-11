@@ -2,13 +2,50 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "create build directory",
+            "type": "shell",
+            "command": "mkdir",
+            "args": ["-p", "${workspaceFolder}/build"],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "configure gpxtools",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                ".."  // Relative path to the CMakeLists.txt file
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "dependsOn": "create build directory",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
             "label": "build gpxtools",
             "type": "shell",
             "command": "cmake",
             "args": [
                 "--build",
-                "${workspaceFolder}/build"
+                "."
             ],
+            "options": {
+                "cwd": "${workspaceFolder}/build"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "dependsOn": "configure gpxtools",
             "group": {
                 "kind": "build",
                 "isDefault": true

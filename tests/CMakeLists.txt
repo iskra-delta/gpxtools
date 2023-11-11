@@ -7,7 +7,10 @@ include_directories(${GTEST_PATH}/include)
 add_executable(tests main.cpp test-blob.cpp)
 
 # Link in google tests.
-target_link_libraries(tests gtest gtest_main)
+target_link_libraries(tests 
+    gtest 
+    gtest_main 
+    ga)
 
 # Make sure the test data is copied.
 file(COPY

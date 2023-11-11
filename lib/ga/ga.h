@@ -71,6 +71,10 @@ namespace ga
 
     extern std::vector<int> bresenham_line(const image &img, int x0, int y0, int x1, int y1);
     extern std::vector<std::vector<int>> blobs(const image& img, uint8_t threshold);
+    extern std::vector<std::pair<int,int>> vectorize(
+        const image &img,           // The image.
+        std::vector<int> pixels,    // The stroke.
+        uint8_t threshold);
     extern uint8_t is_black(uint8_t *pval, uint8_t threshold=32);
 
 } // namespace ga

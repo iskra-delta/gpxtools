@@ -8,11 +8,9 @@
             "request": "launch",
             "program": "${workspaceFolder}/bin/tests",
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/bin",
             "environment": [
                 {
-                    // add the directory where our target was built to the PATHs
-                    // it gets resolved by CMake Tools:
                     "name": "PATH",
                     "value": "$PATH:${command:cmake.launchTargetDirectory}"
                 }
@@ -23,11 +21,6 @@
                 {
                     "description": "Enable pretty-printing for gdb",
                     "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                },
-                {
-                    "description": "Set Disassembly Flavor to Intel",
-                    "text": "-gdb-set disassembly-flavor intel",
                     "ignoreFailures": true
                 }
             ]
