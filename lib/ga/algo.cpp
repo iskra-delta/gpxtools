@@ -190,7 +190,7 @@ namespace ga
         auto [x0, y0] = img.getxy(pt);
         for (const auto npt : pixels) {
             auto [x1,y1] = img.getxy(npt);
-            int ndist=std::max(y1-y0, x1-x0);
+            int ndist=std::max(std::abs(y1-y0), std::abs(x1-x0));
             if (ndist > dist) {
                 dist=ndist;
                 result=npt;
@@ -280,9 +280,15 @@ namespace ga
         while (!unused.empty()) { // While there are any pixels inside.
             auto pend=furthest_point(pstart, img, unused, threshold);
             if (pstart==pend) {
+                // If not already used...
                 std::pair<int,int> line={pstart,pend};
                 lines.push_back(line);
-                move_elem(unused, used, pstart); // unused->used.
+                // Restore all visited nodes.
+                move_elem(visited, unused);
+                // Unused to used.
+                move_elem(unused, used, pstart);
+                // Take next.
+                if (!unused.empty()) pstart=*(unused.begin());
             } else {
                 // Try to match the line.
                 auto line=match_line(pstart,pend, img, unused, threshold);
@@ -295,23 +301,14 @@ namespace ga
                     move_elem(visited, unused);
                     // Move all matched pixels to used.
                     move_elem(unused,used,line);
-                    // If pend has unused neighbours then 
-                    // take those, else take first unused.
-                    if (!unused.empty()) {
-                        // Get all neighbour point.
-                        auto nb=get_neighbours(img,pend,unused);
-                        if (!nb.empty())
-                            pstart=pend;
-                        else
-                            pstart=*(unused.begin());
-                    }
+                    // Take next.
+                    if (!unused.empty()) pstart=*(unused.begin());
                 }
             }
         }
         // Return result.
         return lines;
     }
-
 
     uint8_t is_black(uint8_t *pval, uint8_t threshold)
     {

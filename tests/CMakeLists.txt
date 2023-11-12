@@ -4,7 +4,7 @@ project(gpxtools)
 include_directories(${GTEST_PATH}/include)
 
 # Test executable.
-add_executable(tests main.cpp test-blob.cpp)
+add_executable(tests main.cpp test-vectorize.cpp)
 
 # Link in google tests.
 target_link_libraries(tests 
